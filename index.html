@@ -21,302 +21,446 @@
 :root{
   --wine:#421d24; --violet:#714cb6; --lilac:#d4c7ff; --lagoon:#0c4243;
   --parchment:#f2f0eb; --white:#fff; --mist:#e3e3e2; --ink:#292827; --stone:#5f5e5c;
-  --gold:#e8a24a;
   --r:16px; --r-sm:8px;
   --font:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--parchment);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.55;font-feature-settings:"ss01"}
+body{margin:0;background:var(--parchment);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.55;font-feature-settings:"ss01";overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:var(--violet);font-weight:500;text-decoration:none}
 a:hover{text-decoration:underline}
 :focus-visible{outline:3px solid var(--violet);outline-offset:3px;border-radius:4px}
-.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
-h1,h2,h3{font-weight:460;letter-spacing:-.025em;margin:0;color:var(--ink)}
-h1{font-size:clamp(36px,7.2vw,64px);line-height:1.02}
-h2{font-size:clamp(30px,5vw,48px);line-height:1.05}
-h3{font-size:20px;line-height:1.25;font-weight:540;letter-spacing:-.01em}
+h1,h2,h3{font-weight:460;letter-spacing:-.028em;margin:0;color:var(--ink)}
+h2{font-size:clamp(32px,5.2vw,52px);line-height:1}
+h3{font-size:20px;line-height:1.25;font-weight:540;letter-spacing:-.012em}
 p{margin:0 0 14px}
-.eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--violet);margin-bottom:14px}
-section{padding:72px 0}
+.eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--violet);margin-bottom:16px}
+
+/* cadre éditorial : fines lignes verticales */
+.frame{max-width:1200px;margin:0 auto;padding:0 20px;position:relative}
+.rails{position:relative}
+.rails::before,.rails::after{content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--mist);pointer-events:none}
+.rails::before{left:max(12px,calc(50% - 612px))}
+.rails::after{right:max(12px,calc(50% - 612px))}
+section{padding:88px 0;position:relative}
 
 /* bandeau */
-.announce{background:var(--wine);color:#fff;font-size:14px;text-align:center;padding:10px 16px}
-.announce strong{font-weight:600}
+.announce{position:relative;z-index:3;display:flex;justify-content:center;padding:10px 12px;background:transparent}
+.announce-pill{display:inline-flex;align-items:center;gap:10px;background:var(--wine);color:#fff;font-size:13.5px;border-radius:999px;padding:7px 8px 7px 14px;max-width:100%}
+.announce-pill span.go{background:rgba(255,255,255,.14);border-radius:999px;padding:3px 10px;white-space:nowrap}
 
 /* en-tête */
-header.nav{position:sticky;top:0;z-index:20;background:rgba(242,240,235,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
-header.nav.scrolled{border-bottom-color:var(--mist)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
-.logo{font-weight:600;color:var(--ink);letter-spacing:-.01em;display:flex;align-items:center;gap:10px;font-size:16px}
-.logo-mark{width:30px;height:30px;border-radius:8px;background:var(--wine);display:grid;place-items:center;color:#fff;font-size:15px;font-weight:700}
-.nav-links{display:none;gap:28px}
+header.nav{position:fixed;top:0;left:0;right:0;z-index:40;transition:background .3s,border-color .3s,backdrop-filter .3s;border-bottom:1px solid transparent}
+header.nav.scrolled{background:rgba(242,240,235,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom-color:var(--mist)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px;max-width:1200px;margin:0 auto;padding:0 20px}
+.logo{font-weight:600;color:var(--ink);display:flex;align-items:center;gap:10px;font-size:15px;letter-spacing:-.01em;line-height:1.15}
+.logo:hover{text-decoration:none}
+.logo-mark{flex:none;width:30px;height:30px;border-radius:8px;background:var(--wine);display:grid;place-items:center;color:#fff;font-size:15px;font-weight:700}
+.nav-links{display:none;gap:30px}
 .nav-links a{color:var(--ink);font-weight:460}
-@media(min-width:860px){.nav-links{display:flex}}
+@media(min-width:900px){.nav-links{display:flex}}
 
 /* boutons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:var(--r);background:var(--wine);color:#fff;font-weight:540;font-size:17px;border:0;cursor:pointer;transition:transform .15s ease,background .2s;text-decoration:none!important}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:var(--r);background:var(--wine);color:#fff;font-weight:540;font-size:17px;border:0;cursor:pointer;transition:transform .15s ease,background .2s;text-decoration:none!important;white-space:nowrap}
 .btn:hover{background:#5a2731;transform:translateY(-1px)}
-.btn .arr{transition:transform .2s}
+.btn .arr{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.14);transition:transform .2s}
 .btn:hover .arr{transform:translateX(3px)}
-.btn-sm{min-height:42px;padding:0 16px;font-size:15px;border-radius:var(--r-sm);white-space:nowrap}
-@media(max-width:420px){.logo{font-size:14px;line-height:1.2}.logo-mark{flex:none}}
-.btn-light{background:#fff;color:var(--ink)}
-.btn-light:hover{background:var(--lilac)}
-.under-btn{font-size:14px;color:var(--stone);margin-top:12px}
+.btn-sm{min-height:40px;padding:0 14px;font-size:14.5px;border-radius:var(--r-sm)}
+.btn-lilac{background:var(--lilac);color:var(--ink);border:1px solid var(--ink)}
+.btn-lilac:hover{background:#c6b6ff}
 
-/* hero */
-.hero{padding:48px 0 72px;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:-20% -10% auto auto;width:720px;height:720px;background:radial-gradient(circle at center,rgba(232,162,74,.38),rgba(232,162,74,0) 65%);pointer-events:none}
-.hero-grid{display:grid;gap:44px;align-items:center;position:relative}
-@media(min-width:900px){.hero-grid{grid-template-columns:1.1fr .9fr}.hero{padding:72px 0 96px}}
-.hero .sub{font-size:clamp(18px,2.2vw,21px);color:var(--stone);margin:20px 0 28px;max-width:560px}
-.mock{position:relative;max-width:420px;margin:0 auto;width:100%}
-.mock img{border-radius:10px;transform:rotate(-2.5deg);box-shadow:0 30px 60px -20px rgba(66,29,36,.45),0 0 0 1px rgba(0,0,0,.04)}
-.float{position:absolute;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.6);border-radius:var(--r);padding:12px 14px;font-size:14px;line-height:1.35;max-width:210px}
-.float b{display:block;font-weight:600;font-size:15px}
-.f1{left:-8px;top:44%}
-.f2{right:-8px;bottom:6%}
-@media(min-width:900px){.f1{left:-56px}.f2{right:-40px}}
+/* ===== HERO immersif ===== */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;color:var(--ink);isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-2}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 100%;transform:scale(1.06);transform-origin:50% 100%;will-change:transform}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(247,232,206,.78) 0%,rgba(247,232,206,.35) 30%,rgba(247,232,206,0) 52%)}
+.hero-copy{text-align:center;padding:96px 20px 0;max-width:1140px;margin:0 auto}
+/* Mobile : le texte sur un ciel prolongé, la photo entière en dessous (fondu en haut) */
+@media(max-width:999px){
+  .hero{min-height:0;background:#f1dfd3;padding-bottom:calc(100vw * 1.415 - 70px)!important}
+  .hero-bg{top:auto;height:calc(100vw * 1.415)}
+  .hero-bg img{object-position:50% 100%;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%);mask-image:linear-gradient(to bottom,transparent 0,#000 22%)}
+  .hero::after{display:none}
+  .hero-mobile-cards{position:absolute!important;left:0;right:0;bottom:18px;margin:0!important}
+}
+/* Desktop : photo paysage plein écran, le titre dans le ciel */
+@media(min-width:1000px){.hero{min-height:0;height:calc(200px + 56.3vw);background:#dfc5b7}.hero-bg{top:200px}.hero-bg img{object-position:50% 100%;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 16%);mask-image:linear-gradient(to bottom,transparent 0,#000 16%)}.hero-copy{padding-top:100px}.hero .sub{margin:18px auto 24px;max-width:720px}}
+.hero h1{font-size:clamp(40px,7.4vw,84px);line-height:.96;letter-spacing:-.035em}
+.hero .sub{font-size:clamp(17px,2vw,20px);margin:20px auto 28px;max-width:600px;color:#3a3532}
+.under-btn{font-size:14px;color:#3a3532;margin-top:12px}
 
-/* faits */
-.facts{display:grid;gap:12px}
-@media(min-width:800px){.facts{grid-template-columns:repeat(3,1fr)}}
-.fact{background:#fff;border:1px solid var(--mist);border-radius:var(--r);padding:24px}
-.fact .k{font-size:15px;font-weight:600;color:var(--violet);margin-bottom:8px}
-.fact h3{margin-bottom:8px}
-.fact p{color:var(--stone);font-size:16px;margin:0}
+.glass{position:absolute;z-index:2;background:rgba(255,255,255,.62);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(255,255,255,.55);border-radius:var(--r);padding:14px 16px;font-size:14px;line-height:1.4;color:var(--ink)}
+.glass b{display:block;font-weight:600;font-size:15px;margin-bottom:2px}
+.g-check{left:max(16px,calc(50% - 600px));bottom:9%;width:260px;display:none}
+.g-check ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:7px}
+.g-check li{display:flex;gap:9px;align-items:center;font-size:13.5px}
+.g-check li i{flex:none;width:16px;height:16px;border-radius:5px;border:1.5px solid var(--ink);display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700}
+.g-check li.ok i{background:var(--wine);border-color:var(--wine);color:#fff}
+.g-check li.ok span{text-decoration:line-through;text-decoration-color:rgba(41,40,39,.4);color:#55504c}
+.g-free{right:max(16px,calc(50% - 600px));top:44%;width:230px;display:none}
+.g-retry{right:max(16px,calc(50% - 560px));bottom:12%;width:250px;display:none}
+.g-pill{display:inline-flex;align-items:center;gap:6px;background:var(--lilac);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600;margin-bottom:8px}
+@media(min-width:1000px){.g-check,.g-free,.g-retry{display:block}}
+.hero-mobile-cards{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:auto auto 22px;padding:0 16px;position:relative;z-index:2}
+.hero-mobile-cards .glass{position:static;padding:10px 14px;font-size:13px}
+@media(min-width:1000px){.hero-mobile-cards{display:none}}
 
-/* problème */
-.two{display:grid;gap:36px}
-@media(min-width:900px){.two{grid-template-columns:.9fr 1.1fr;gap:64px}}
-.quotes{display:grid;gap:10px;margin:22px 0}
-.quote{background:#fff;border:1px solid var(--mist);border-radius:var(--r);padding:14px 18px;font-weight:500}
+/* ===== cellules chiffres ===== */
+.cells{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--mist);border-left:1px solid var(--mist);background:#fff}
+@media(min-width:800px){.cells{grid-template-columns:repeat(6,1fr)}}
+.cell{border-right:1px solid var(--mist);border-bottom:1px solid var(--mist);padding:24px 14px;text-align:center}
+.cell strong{display:block;font-size:30px;font-weight:460;letter-spacing:-.03em;line-height:1;color:var(--ink)}
+.cell span{display:block;font-size:13px;color:var(--stone);margin-top:6px}
+.cells-cap{text-align:center;color:var(--stone);font-size:14px;margin:0 0 18px}
+
+/* ===== problème ===== */
+.prob{display:grid;gap:40px}
+@media(min-width:900px){.prob{grid-template-columns:1fr 1fr;gap:72px;align-items:start}}
 .lead{font-size:19px}
+.chat{display:grid;gap:10px;margin:24px 0}
+.bubble{justify-self:start;max-width:92%;background:#fff;border:1px solid var(--mist);border-radius:18px 18px 18px 6px;padding:12px 16px;font-weight:500;opacity:0;transform:translateY(10px) scale(.98);transition:opacity .5s ease,transform .5s ease}
+.bubble:nth-child(even){justify-self:end;border-radius:18px 18px 6px 18px;background:var(--lilac);border-color:transparent}
+.chat.in .bubble{opacity:1;transform:none}
+.chat.in .bubble:nth-child(2){transition-delay:.25s}
+.chat.in .bubble:nth-child(3){transition-delay:.5s}
+.chat.in .bubble:nth-child(4){transition-delay:.75s}
 
-/* bande sombre */
-.dark{background:var(--lagoon);color:#fff}
+/* ===== bonne nouvelle ===== */
+.big-facts{display:grid;gap:0;margin-top:36px;border-top:1px solid var(--ink)}
+.bf{display:grid;gap:8px 32px;padding:28px 0;border-bottom:1px solid var(--mist)}
+@media(min-width:800px){.bf{grid-template-columns:120px 1fr 1.2fr;align-items:baseline}}
+.bf .n{font-size:15px;font-weight:600;color:var(--violet)}
+.bf h3{font-size:clamp(24px,3vw,32px);font-weight:460;letter-spacing:-.025em;line-height:1.1}
+.bf p{color:var(--stone);margin:0}
+
+/* ===== bande sombre animée ===== */
+.dark{background:var(--lagoon);color:#fff;overflow:hidden}
 .dark h2{color:#fff}
 .dark p{color:rgba(255,255,255,.82);font-size:18px}
 .dark .eyebrow{color:var(--lilac)}
-.dark-grid{display:grid;gap:36px;align-items:center}
-@media(min-width:900px){.dark-grid{grid-template-columns:1fr 1fr;gap:64px}}
-.road{position:relative;height:240px;border-radius:var(--r);overflow:hidden;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.12)}
-.road .lane{position:absolute;left:50%;top:0;bottom:0;width:6px;transform:translateX(-50%);background:repeating-linear-gradient(to bottom,rgba(255,255,255,.75) 0 26px,transparent 26px 52px);animation:drive 1.6s linear infinite}
-@keyframes drive{to{background-position:0 52px}}
-@media(prefers-reduced-motion:reduce){.road .lane{animation:none}}
-.road .note{position:absolute;font-size:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 12px}
-.n1{left:16px;top:22px}.n2{right:16px;top:96px}.n3{left:24px;bottom:24px}
-.punch{font-size:21px!important;color:#fff!important;font-weight:540}
+.dark-grid{display:grid;gap:44px;align-items:center}
+@media(min-width:900px){.dark-grid{grid-template-columns:1fr 1fr;gap:72px}}
+.road{position:relative;height:420px;border-radius:var(--r);overflow:hidden;background:
+  linear-gradient(90deg,transparent 0 18%,rgba(255,255,255,.05) 18% 82%,transparent 82%),
+  linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.01));border:1px solid rgba(255,255,255,.12)}
+.road .edge{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.35)}
+.road .edge.l{left:18%}.road .edge.r{right:18%}
+.road .lane{position:absolute;left:50%;top:-60px;bottom:-60px;width:6px;transform:translateX(-50%);background:repeating-linear-gradient(to bottom,rgba(255,255,255,.8) 0 30px,transparent 30px 60px)}
+.road .trap{position:absolute;left:50%;transform:translateX(-50%);width:78%;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px 14px;font-size:15px;transition:background .4s,border-color .4s,opacity .4s}
+.road .trap i{flex:none;width:22px;height:22px;border-radius:7px;background:rgba(255,255,255,.15);display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:700;transition:background .4s}
+.road .trap.hit{background:rgba(212,199,255,.2);border-color:var(--lilac)}
+.road .trap.hit i{background:#e2645a}
+.road .trap.hit span{text-decoration:line-through;text-decoration-color:rgba(255,255,255,.6)}
+.t1{top:16%}.t2{top:43%}.t3{top:70%}
+.punch{font-size:22px!important;color:#fff!important;font-weight:540;line-height:1.35}
 
-/* contenu */
-.cards{display:grid;gap:12px;margin-top:32px}
-@media(min-width:700px){.cards{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:1000px){.cards{grid-template-columns:repeat(3,1fr)}}
-.card{background:#fff;border:1px solid var(--mist);border-radius:var(--r);padding:22px}
-.card .num{width:34px;height:34px;border-radius:10px;background:var(--lilac);color:var(--wine);display:grid;place-items:center;font-weight:700;font-size:15px;margin-bottom:14px}
-.card h3{margin-bottom:6px;font-size:18px}
-.card p{color:var(--stone);font-size:16px;margin:0}
+/* ===== onglets (contenu) ===== */
+.suite-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px}
+.suite-head p{max-width:560px;color:var(--stone);font-size:18px;margin:16px 0 0}
+.tabs{margin-top:36px;background:#fff;border:1px solid var(--mist);border-radius:var(--r-sm);padding:8px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:1 0 auto;min-width:150px;border:0;background:transparent;border-radius:6px;padding:12px 14px;font:inherit;font-size:15px;font-weight:540;color:var(--stone);cursor:pointer;display:flex;align-items:center;gap:9px;justify-content:center;transition:background .2s,color .2s}
+.tab .dot{width:22px;height:22px;border-radius:7px;background:var(--mist);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--stone);transition:background .2s,color .2s}
+.tab[aria-selected="true"]{background:var(--lilac);color:var(--ink)}
+.tab[aria-selected="true"] .dot{background:var(--wine);color:#fff}
+.panel{margin-top:12px;background:#fff;border:1px solid var(--mist);border-radius:var(--r);overflow:hidden;display:grid}
+@media(min-width:900px){.panel{grid-template-columns:1fr 1fr;min-height:460px}}
+.panel-txt{padding:32px 26px}
+@media(min-width:900px){.panel-txt{padding:48px}}
+.panel-txt h3{font-size:clamp(26px,3vw,34px);font-weight:460;letter-spacing:-.025em;line-height:1.08;margin-bottom:22px}
+.items{list-style:none;margin:0;padding:0;display:grid;gap:18px}
+.items li{display:grid;grid-template-columns:24px 1fr;gap:12px}
+.items li::before{content:"";width:12px;height:12px;border:1.5px solid var(--ink);border-radius:50%;margin-top:7px}
+.items b{display:block;font-weight:600;margin-bottom:2px}
+.items span{color:var(--stone)}
+.panel-art{position:relative;min-height:280px;overflow:hidden}
+.art{position:absolute;inset:0;transition:opacity .5s ease}
+.art-a{background:linear-gradient(160deg,#ffd1c7 0%,#c9b6ff 55%,#8f7ae0 100%)}
+.art-b{background:linear-gradient(180deg,#9fc4ff 0%,#d9e8ff 55%,#fff3dc 100%)}
+.art-c{background:linear-gradient(160deg,#ffe2b8 0%,#f5b48a 50%,#c97c9c 100%)}
+.art-d{background:linear-gradient(200deg,#b7f0d8 0%,#cfd9ff 60%,#efe6ff 100%)}
+.art-e{background:linear-gradient(170deg,#421d24 0%,#7a3a4a 45%,#e8a24a 100%)}
+.art-f{background:linear-gradient(160deg,#d4c7ff 0%,#f2f0eb 60%,#ffd9a8 100%)}
+.art .bignum{position:absolute;right:-8px;bottom:-40px;font-size:clamp(200px,26vw,340px);font-weight:460;letter-spacing:-.06em;line-height:1;color:rgba(255,255,255,.45)}
+.art .gcard{position:absolute;left:8%;top:14%;max-width:78%;background:rgba(255,255,255,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.6);border-radius:var(--r);padding:16px 18px}
+.art .gcard small{display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--violet);margin-bottom:6px}
+.art .gcard b{font-size:clamp(20px,2.4vw,26px);font-weight:540;letter-spacing:-.02em;line-height:1.15;display:block}
+.art-e .gcard small{color:var(--wine)}
 
-/* bonus */
-.bonus{background:var(--lilac);border-radius:24px;padding:32px 24px;display:grid;gap:18px}
-@media(min-width:800px){.bonus{grid-template-columns:1fr 1fr;padding:44px}}
-.bonus-item{background:rgba(255,255,255,.7);border-radius:var(--r);padding:20px}
-.bonus-item h3{margin-bottom:6px}
-.bonus-item p{margin:0;color:var(--ink)}
-.tag{display:inline-block;background:var(--wine);color:#fff;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;margin-bottom:12px}
+/* ===== bonus ===== */
+.bonus{display:grid;gap:18px;align-items:center}
+@media(min-width:900px){.bonus{grid-template-columns:.85fr 1.15fr;gap:56px}}
+.sheet{position:relative;background:#fff;border:1px solid var(--mist);border-radius:var(--r);padding:26px;transform:rotate(-1.2deg)}
+.sheet h4{margin:0 0 14px;font-size:16px;font-weight:600}
+.sheet ul{list-style:none;margin:0;padding:0;columns:1}
+@media(min-width:600px){.sheet ul{columns:2;column-gap:28px}}
+.sheet li{break-inside:avoid;display:flex;gap:9px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--mist);font-size:14px}
+.sheet li i{flex:none;width:16px;height:16px;border:1.5px solid var(--ink);border-radius:4px}
+.sheet .stamp{position:absolute;right:14px;top:-14px;background:var(--wine);color:#fff;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;transform:rotate(4deg)}
+.bonus-list{display:grid;gap:12px;margin-top:22px}
+.bonus-item{background:var(--lilac);border-radius:var(--r);padding:18px 20px}
+.bonus-item h3{margin-bottom:4px}
+.bonus-item p{margin:0}
 
-/* pour qui */
-.who{display:grid;gap:14px;margin-top:28px}
-@media(min-width:800px){.who{grid-template-columns:1fr 1fr}}
-.who-box{background:#fff;border:1px solid var(--mist);border-radius:var(--r);padding:26px}
-.who-box h3{margin-bottom:14px}
-.who-box ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.who-box li{position:relative;padding-left:30px}
-.who-box li::before{position:absolute;left:0;top:1px;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font-size:13px;font-weight:700}
+/* ===== pour qui ===== */
+.who{display:grid;gap:14px;margin-top:32px}
+@media(min-width:800px){.who{grid-template-columns:1.2fr .8fr}}
+.who-box{border-radius:var(--r);padding:28px}
+.who-box.yes{background:#fff;border:1px solid var(--mist)}
+.who-box.no{background:transparent;border:1px dashed #cfccc6}
+.who-box h3{margin-bottom:16px}
+.who-box ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.who-box li{position:relative;padding-left:32px}
+.who-box li::before{position:absolute;left:0;top:1px;width:21px;height:21px;border-radius:7px;display:grid;place-items:center;font-size:12px;font-weight:700}
 .yes li::before{content:"✓";background:var(--lilac);color:var(--wine)}
 .no li::before{content:"✕";background:var(--mist);color:var(--stone)}
 
-/* FAQ */
-.faq{margin-top:28px;display:grid;gap:10px;max-width:860px}
-details{background:#fff;border:1px solid var(--mist);border-radius:var(--r);padding:0 22px}
-summary{cursor:pointer;list-style:none;padding:20px 32px 20px 0;font-weight:540;font-size:18px;position:relative}
+/* ===== FAQ ===== */
+.faq-grid{display:grid;gap:32px}
+@media(min-width:900px){.faq-grid{grid-template-columns:.8fr 1.2fr;gap:64px}}
+.faq{display:grid;border-top:1px solid var(--ink)}
+details{border-bottom:1px solid var(--mist)}
+summary{cursor:pointer;list-style:none;padding:22px 40px 22px 0;font-weight:540;font-size:18px;position:relative}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"+";position:absolute;right:0;top:16px;font-size:26px;font-weight:400;color:var(--violet);transition:transform .2s}
+summary::after{content:"+";position:absolute;right:4px;top:17px;font-size:28px;font-weight:400;color:var(--violet);transition:transform .25s}
 details[open] summary::after{transform:rotate(45deg)}
-details p{color:var(--stone);margin:0 0 20px}
+details p{color:var(--stone);margin:0 0 22px;max-width:620px}
 
-/* prix */
-.price-band{position:relative;overflow:hidden;border-radius:28px;padding:48px 24px;text-align:center;background:
-  radial-gradient(ellipse at 15% 20%,rgba(212,199,255,.75),transparent 55%),
-  radial-gradient(ellipse at 85% 30%,rgba(232,162,74,.55),transparent 55%),
-  radial-gradient(ellipse at 50% 100%,rgba(113,76,182,.35),transparent 60%),#f7efe4}
-.price-band h2{max-width:720px;margin:0 auto 14px}
-.price-band .why{max-width:620px;margin:0 auto 26px;font-size:18px}
-.price{font-size:clamp(56px,10vw,84px);font-weight:460;letter-spacing:-.04em;line-height:1;margin:8px 0}
-.price-incl{font-weight:540;margin-bottom:26px}
-.trust{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;font-size:14px;color:var(--stone);margin-top:16px}
+/* ===== prix : bande dégradé ===== */
+.price-band{position:relative;overflow:hidden;padding:96px 0;background:
+  radial-gradient(ellipse 60% 70% at 12% 20%,rgba(212,199,255,.95),transparent 60%),
+  radial-gradient(ellipse 50% 60% at 88% 25%,rgba(255,196,140,.85),transparent 60%),
+  radial-gradient(ellipse 60% 60% at 70% 100%,rgba(113,76,182,.45),transparent 65%),
+  radial-gradient(ellipse 50% 50% at 25% 95%,rgba(255,170,190,.6),transparent 60%),#f6efe6}
+.price-in{display:grid;gap:32px;align-items:center}
+@media(min-width:900px){.price-in{grid-template-columns:1.2fr .8fr;gap:64px}}
+.price-in .why{font-size:19px;max-width:560px;margin-top:18px}
+.price-card{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.7);border-radius:24px;padding:30px}
+.price{font-size:clamp(64px,9vw,92px);font-weight:460;letter-spacing:-.05em;line-height:1}
+.price-incl{font-weight:540;margin:10px 0 22px}
+.price-card .btn{width:100%}
+.trust{display:grid;gap:6px;font-size:14px;color:var(--stone);margin-top:16px}
+.trust span::before{content:"✓ ";color:var(--violet);font-weight:700}
 
 /* barre mobile */
 .sticky-buy{position:fixed;left:12px;right:12px;bottom:12px;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--mist);border-radius:18px;padding:10px 10px 10px 16px;transform:translateY(140%);transition:transform .3s ease}
 .sticky-buy.show{transform:none}
 .sticky-buy span{font-size:14px;line-height:1.25}
 .sticky-buy b{font-size:17px;display:block}
-@media(min-width:860px){.sticky-buy{display:none}}
+@media(min-width:900px){.sticky-buy{display:none}}
 
 /* footer */
-footer{background:var(--wine);color:rgba(255,255,255,.75);padding:56px 0 96px;font-size:14px;margin-top:72px}
-footer .fine{max-width:760px;margin-bottom:22px}
-footer nav{display:flex;flex-wrap:wrap;gap:10px 22px}
+footer{background:var(--wine);color:rgba(255,255,255,.72);padding:64px 0 104px;font-size:14px}
+footer .fine{max-width:760px;margin-bottom:24px}
+footer nav{display:flex;flex-wrap:wrap;gap:10px 24px}
 footer a{color:#fff;font-weight:460}
 footer .brand{color:#fff;font-weight:600;font-size:16px;margin-bottom:14px}
-@media(min-width:860px){footer{padding-bottom:56px}}
+@media(min-width:900px){footer{padding-bottom:64px}}
 
 /* apparition */
-.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .reveal.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+@media(prefers-reduced-motion:reduce){.reveal,.bubble{opacity:1!important;transform:none!important;transition:none!important}.hero-bg img{transform:none!important}}
 </style>
 </head>
 <body>
 
-<div class="announce"><strong>Nouveau</strong> · Guide PDF de 25 pages · Règles vérifiées en octobre 2026</div>
-
 <header class="nav" id="nav">
-  <div class="wrap nav-in">
+  <div class="nav-in">
     <a class="logo" href="#top" aria-label="Accueil"><span class="logo-mark">A</span>Permis en candidat libre</a>
     <nav class="nav-links" aria-label="Navigation">
       <a href="#contenu">Le contenu</a>
       <a href="#pour-qui">Pour qui&nbsp;?</a>
       <a href="#questions">Questions</a>
     </nav>
-    <a class="btn btn-sm buy" href="#prix">Acheter · 19&nbsp;€</a>
+    <a class="btn btn-sm btn-lilac buy" href="#prix">Acheter · 19&nbsp;€</a>
   </div>
 </header>
 
 <main id="top">
 
-<!-- BLOC 1 -->
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Permis B · Candidat libre</span>
-      <h1>Ton permis sans auto-école&nbsp;: le plan étape par étape pour l'avoir en candidat libre</h1>
-      <p class="sub">Toutes les démarches, le vrai budget et la préparation pour réussir du premier coup, dans un guide clair de 25 pages.</p>
-      <a class="btn buy" href="#prix">Je veux mon plan · 19&nbsp;€ <span class="arr" aria-hidden="true">→</span></a>
-      <p class="under-btn">PDF à télécharger tout de suite après le paiement.</p>
+<!-- BLOC 1 : hero immersif -->
+<section class="hero" style="padding:0">
+  <div class="hero-bg">
+    <picture>
+      <source media="(max-width:999px)" srcset="img/hero-mobile.jpg">
+      <img id="heroImg" src="img/hero.jpg" alt="Un jeune conducteur et son accompagnateur dans une voiture d'apprentissage au coucher du soleil" fetchpriority="high">
+    </picture>
+  </div>
+
+  <div class="hero-copy">
+    <div class="announce" style="padding:0 0 22px">
+      <span class="announce-pill">Guide PDF de 25 pages · règles vérifiées en octobre 2026 <span class="go">Nouveau</span></span>
     </div>
-    <div class="mock">
-      <img src="img/couverture-guide.jpg" width="720" height="1018" alt="Couverture du guide « Permis en candidat libre »" fetchpriority="high">
-      <div class="float f1"><b>Examen pratique gratuit</b>Tu paies seulement la voiture.</div>
-      <div class="float f2"><b>Sans limite de passages</b>Pendant les 5 ans de validité de ton code.</div>
-    </div>
+    <h1>Ton permis sans auto‑école</h1>
+    <p class="sub">Le plan étape par étape pour l'avoir en candidat libre&nbsp;: toutes les démarches, le vrai budget et la préparation pour réussir du premier coup, dans un guide clair de 25 pages.</p>
+    <a class="btn buy" href="#prix">Je veux mon plan · 19&nbsp;€ <span class="arr" aria-hidden="true">→</span></a>
+    <p class="under-btn">PDF à télécharger tout de suite après le paiement.</p>
+  </div>
+
+  <div class="glass g-check" aria-hidden="true">
+    <b>Ta checklist dossier</b>
+    <ul>
+      <li class="ok"><i>✓</i><span>Demande de NEPH envoyée</span></li>
+      <li class="ok"><i>✓</i><span>Code réussi</span></li>
+      <li class="ok"><i>✓</i><span>Accompagnateur, charte signée</span></li>
+      <li><i></i><span>Examen réservé</span></li>
+    </ul>
+  </div>
+  <div class="glass g-free" aria-hidden="true"><span class="g-pill">Bon à savoir</span><b>Examen pratique gratuit</b>Tu paies seulement la location de la voiture.</div>
+  <div class="glass g-retry" aria-hidden="true"><span class="g-pill">Sans stress</span><b>Repasse autant que nécessaire</b>Pendant les 5 ans de validité de ton code.</div>
+
+  <div class="hero-mobile-cards" aria-hidden="true">
+    <div class="glass"><b>Examen pratique gratuit</b></div>
+    <div class="glass"><b>Repasse sans limite</b></div>
   </div>
 </section>
 
-<!-- BLOC 2 -->
+<!-- chiffres du guide -->
+<div class="rails" style="padding:40px 0 0">
+  <div class="frame">
+    <p class="cells-cap">Ce que contient le guide, en chiffres</p>
+    <div class="cells reveal">
+      <div class="cell"><strong>25</strong><span>pages claires</span></div>
+      <div class="cell"><strong>8</strong><span>étapes dans l'ordre</span></div>
+      <div class="cell"><strong>32 min</strong><span>d'examen décortiquées</span></div>
+      <div class="cell"><strong>16</strong><span>cases à cocher</span></div>
+      <div class="cell"><strong>0&nbsp;€</strong><span>l'examen pratique</span></div>
+      <div class="cell"><strong>5 ans</strong><span>pour repasser</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="rails">
+
+<!-- BLOC 2 : problème -->
 <section>
-  <div class="wrap two">
+  <div class="frame prob">
     <div class="reveal">
       <span class="eyebrow">Le problème</span>
-      <h2>Le devis de l'auto-école t'a refroidi&nbsp;?</h2>
-    </div>
-    <div class="reveal">
-      <p class="lead">Tu demandes un devis à l'auto-école et tu tombes sur 1 500&nbsp;€. Parfois plus de 2 000&nbsp;€. Et on te parle de plusieurs mois d'attente.</p>
+      <h2>1&nbsp;500&nbsp;€ le devis. Des mois d'attente.</h2>
+      <p class="lead" style="margin-top:22px">Tu demandes un devis à l'auto-école et tu tombes sur 1&nbsp;500&nbsp;€. Parfois plus de 2&nbsp;000&nbsp;€. Et on te parle de plusieurs mois d'attente.</p>
       <p>Alors tu te renseignes sur le candidat libre. Et là, c'est le flou total&nbsp;:</p>
-      <div class="quotes">
-        <div class="quote">«&nbsp;C'est quoi le NEPH&nbsp;? Je le demande où&nbsp;?&nbsp;»</div>
-        <div class="quote">«&nbsp;Il faut une voiture spéciale&nbsp;? Une assurance&nbsp;?&nbsp;»</div>
-        <div class="quote">«&nbsp;Qui a le droit de m'accompagner&nbsp;?&nbsp;»</div>
-        <div class="quote">«&nbsp;Comment je réserve l'examen sans auto-école&nbsp;?&nbsp;»</div>
+    </div>
+    <div>
+      <div class="chat" id="chat">
+        <div class="bubble">«&nbsp;C'est quoi le NEPH&nbsp;? Je le demande où&nbsp;?&nbsp;»</div>
+        <div class="bubble">«&nbsp;Il faut une voiture spéciale&nbsp;? Une assurance&nbsp;?&nbsp;»</div>
+        <div class="bubble">«&nbsp;Qui a le droit de m'accompagner&nbsp;?&nbsp;»</div>
+        <div class="bubble">«&nbsp;Comment je réserve l'examen sans auto-école&nbsp;?&nbsp;»</div>
       </div>
-      <p>Et sur les forums, tu lis tout et son contraire. «&nbsp;Au final c'est pas moins cher.&nbsp;» «&nbsp;Le candidat libre, ça marche pas vraiment.&nbsp;»</p>
-      <p><strong>Résultat&nbsp;:</strong> tu restes bloqué. Sans permis, sans plan, et avec l'impression que c'est fait pour les autres.</p>
+      <div class="reveal">
+        <p>Et sur les forums, tu lis tout et son contraire. «&nbsp;Au final c'est pas moins cher.&nbsp;» «&nbsp;Le candidat libre, ça marche pas vraiment.&nbsp;»</p>
+        <p><strong>Résultat&nbsp;:</strong> tu restes bloqué. Sans permis, sans plan, et avec l'impression que c'est fait pour les autres.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- BLOC 3 -->
+<!-- BLOC 3 : bonne nouvelle -->
 <section style="padding-top:0">
-  <div class="wrap">
-    <div class="reveal" style="max-width:760px">
+  <div class="frame">
+    <div class="reveal" style="max-width:820px">
       <span class="eyebrow">La bonne nouvelle</span>
-      <h2>Le candidat libre, c'est 100 % légal.</h2>
-      <p class="lead" style="margin-top:16px;color:var(--stone)">Et il y a des choses que beaucoup de gens ignorent.</p>
+      <h2>Le candidat libre, c'est 100&nbsp;% légal.</h2>
+      <p class="lead" style="margin-top:18px;color:var(--stone)">Et il y a des choses que beaucoup de gens ignorent.</p>
     </div>
-    <div class="facts" style="margin-top:28px">
-      <div class="fact reveal"><div class="k">01</div><h3>L'examen pratique est gratuit</h3><p>Ce qu'on paie en auto-école le jour J, ce sont des frais d'accompagnement. En candidat libre, tu paies seulement la location de la voiture.</p></div>
-      <div class="fact reveal"><div class="k">02</div><h3>Aucun minimum d'heures</h3><p>Aucun nombre minimum d'heures n'est imposé. Tu t'entraînes autant que toi tu en as besoin.</p></div>
-      <div class="fact reveal"><div class="k">03</div><h3>Repasse autant que nécessaire</h3><p>Pendant les 5 ans de validité de ton code. L'ancienne limite de 5 passages n'existe plus.</p></div>
+    <div class="big-facts">
+      <div class="bf reveal"><span class="n">01</span><h3>L'examen pratique est gratuit.</h3><p>Ce qu'on paie en auto-école le jour J, ce sont des frais d'accompagnement. En candidat libre, tu paies seulement la location de la voiture.</p></div>
+      <div class="bf reveal"><span class="n">02</span><h3>Aucun minimum d'heures.</h3><p>Aucun nombre minimum d'heures n'est imposé. Tu t'entraînes autant que toi tu en as besoin.</p></div>
+      <div class="bf reveal"><span class="n">03</span><h3>Repasse autant que nécessaire.</h3><p>Pendant les 5 ans de validité de ton code. L'ancienne limite de 5 passages n'existe plus.</p></div>
     </div>
   </div>
 </section>
 
-<!-- BLOC 4 -->
-<section class="dark">
-  <div class="wrap dark-grid">
-    <div class="road reveal" aria-hidden="true">
-      <div class="lane"></div>
-      <div class="note n1">Rouler sans objectif</div>
-      <div class="note n2">Réserver trop tôt</div>
-      <div class="note n3">Se planter dans les papiers</div>
+</div><!-- /rails -->
+
+<!-- BLOC 4 : bande sombre animée au défilement -->
+<section class="dark" id="verite">
+  <div class="frame dark-grid">
+    <div class="road" id="road" aria-hidden="true">
+      <div class="edge l"></div><div class="edge r"></div>
+      <div class="lane" id="lane"></div>
+      <div class="trap t1"><i>!</i><span>Rouler sans objectif</span></div>
+      <div class="trap t2"><i>!</i><span>Réserver l'examen trop tôt</span></div>
+      <div class="trap t3"><i>!</i><span>Se planter dans les papiers</span></div>
     </div>
     <div class="reveal">
       <span class="eyebrow">La vérité que personne ne te dit</span>
       <h2>Le candidat libre n'est pas magique.</h2>
-      <p style="margin-top:18px">Selon un chiffre du ministère (2016), les candidats libres réussissent moins souvent que la moyenne.</p>
+      <p style="margin-top:20px">Selon un chiffre du ministère (2016), les candidats libres réussissent moins souvent que la moyenne.</p>
       <p>La raison est simple&nbsp;: la plupart se lancent sans plan. Ils roulent sans objectif, réservent l'examen trop tôt, se plantent dans les papiers… et finissent par payer plus cher que prévu.</p>
       <p class="punch">Ce guide existe pour que tu ne fasses pas partie de ceux-là.</p>
     </div>
   </div>
 </section>
 
-<!-- BLOC 5 + 6 -->
+<div class="rails">
+
+<!-- BLOC 5 + 6 : la solution, en onglets -->
 <section id="contenu">
-  <div class="wrap">
-    <div class="reveal" style="max-width:820px">
-      <span class="eyebrow">La solution</span>
-      <h2>«&nbsp;Permis en candidat libre&nbsp;: le plan étape par étape pour l'avoir sans auto-école&nbsp;»</h2>
-      <p class="lead" style="margin-top:18px;color:var(--stone)">Un guide PDF de 25 pages, écrit simplement, qui t'emmène de l'inscription jusqu'au permis dans ta poche. Chaque règle a été vérifiée dans les textes officiels en octobre 2026.</p>
+  <div class="frame">
+    <div class="suite-head reveal">
+      <div style="max-width:760px">
+        <span class="eyebrow">La solution</span>
+        <h2>Permis en candidat libre&nbsp;: le plan étape par étape pour l'avoir sans auto-école.</h2>
+        <p>Un guide PDF de 25 pages, écrit simplement, qui t'emmène de l'inscription jusqu'au permis dans ta poche. Chaque règle a été vérifiée dans les textes officiels en octobre 2026.</p>
+      </div>
+      <a class="btn btn-lilac btn-sm buy" href="#prix">Voir le prix</a>
     </div>
-    <h3 class="reveal" style="margin-top:44px;font-size:24px">Ce qu'il y a dedans</h3>
-    <div class="cards">
-      <div class="card reveal"><div class="num">1</div><h3>Le test en 5 questions</h3><p>Pour savoir si le candidat libre est vraiment fait pour toi, avant de dépenser un euro.</p></div>
-      <div class="card reveal"><div class="num">2</div><h3>Le vrai budget</h3><p>Ce que l'État te fait payer, ce que le marché te fait payer, et un tableau pour calculer ton total.</p></div>
-      <div class="card reveal"><div class="num">3</div><h3>Ton numéro NEPH</h3><p>La liste exacte des pièces, et les 3 pièges qui bloquent les dossiers (le n°1 concerne tous ceux qui ont déjà été inscrits en auto-école).</p></div>
-      <div class="card reveal"><div class="num">4</div><h3>Le code du premier coup</h3><p>Les chiffres officiels, où le passer, et le bon moment pour le réserver.</p></div>
-      <div class="card reveal"><div class="num">5</div><h3>Ton accompagnateur</h3><p>Les 4 conditions officielles, et ce que certains loueurs exigent en plus.</p></div>
-      <div class="card reveal"><div class="num">6</div><h3>La voiture</h3><p>Ce que la loi impose vraiment, et les 3 questions à poser au loueur avant de réserver.</p></div>
-      <div class="card reveal"><div class="num">7</div><h3>T'entraîner sans gaspiller une heure</h3><p>La méthode de séance en 3 temps et la règle d'or qui fait économiser des heures de location.</p></div>
-      <div class="card reveal"><div class="num">8</div><h3>Réserver ton examen</h3><p>Au bon moment, sans te précipiter.</p></div>
-      <div class="card reveal"><div class="num">9</div><h3>Décrocher une place sur RdvPermis</h3><p>Les places manquent pour les candidats libres. Les 5 conseils pour mettre toutes les chances de ton côté, et l'erreur qui te bloque 40 jours.</p></div>
-      <div class="card reveal"><div class="num">10</div><h3>Le jour J décortiqué</h3><p>Le déroulé des 32 minutes, comment tu es noté, les 2 points bonus que beaucoup oublient, et toutes les erreurs qui éliminent.</p></div>
-      <div class="card reveal"><div class="num">11</div><h3>Après l'examen</h3><p>Réussi ou raté, quoi faire exactement.</p></div>
-      <div class="card reveal"><div class="num">12</div><h3>Deux parcours expliqués</h3><p>Un étudiant qui part de zéro, et quelqu'un qui a déjà raté deux fois en auto-école, du début à la fin.</p></div>
+
+    <div class="tabs" role="tablist" aria-label="Ce qu'il y a dedans">
+      <button class="tab" role="tab" aria-selected="true" data-i="0"><span class="dot">1</span>Avant de te lancer</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="1"><span class="dot">2</span>Ton dossier</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="2"><span class="dot">3</span>Accompagnateur et voiture</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="3"><span class="dot">4</span>L'entraînement</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="4"><span class="dot">5</span>L'examen</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="5"><span class="dot">6</span>Après</button>
+    </div>
+
+    <div class="panel reveal" role="tabpanel">
+      <div class="panel-txt" id="panelTxt"></div>
+      <div class="panel-art" id="panelArt"></div>
     </div>
   </div>
 </section>
 
-<!-- BLOC 7 -->
+<!-- BLOC 7 : bonus -->
 <section style="padding-top:0">
-  <div class="wrap">
-    <div class="bonus reveal">
-      <div>
-        <span class="tag">Inclus en bonus</span>
-        <h2 style="font-size:clamp(28px,4vw,40px)">Deux outils prêts à l'emploi.</h2>
-      </div>
-      <div style="display:grid;gap:12px">
+  <div class="frame bonus">
+    <div class="reveal">
+      <span class="eyebrow">Inclus en bonus</span>
+      <h2>Deux outils prêts à l'emploi.</h2>
+      <div class="bonus-list">
         <div class="bonus-item"><h3>La checklist dossier à imprimer</h3><p>16 cases à cocher, de la pièce d'identité à la voiture du jour J.</p></div>
         <div class="bonus-item"><h3>Le planning type sur 6 semaines</h3><p>À adapter à ton rythme.</p></div>
       </div>
     </div>
+    <div class="sheet reveal" aria-hidden="true">
+      <span class="stamp">Bonus</span>
+      <h4>Ta checklist dossier</h4>
+      <ul>
+        <li><i></i>Pièce d'identité scannée</li>
+        <li><i></i>Justificatif de domicile</li>
+        <li><i></i>Photo-signature numérique</li>
+        <li><i></i>ASSR2 ou ASR</li>
+        <li><i></i>Document JDC</li>
+        <li><i></i>Demande de NEPH</li>
+        <li><i></i>Code réservé</li>
+        <li><i></i>Code réussi</li>
+        <li><i></i>Charte signée</li>
+        <li><i></i>Livret d'apprentissage</li>
+        <li><i></i>Compte RdvPermis</li>
+        <li><i></i>Voiture du jour J</li>
+      </ul>
+    </div>
   </div>
 </section>
 
-<!-- BLOC 8 -->
+<!-- BLOC 8 : pour qui -->
 <section id="pour-qui" style="padding-top:0">
-  <div class="wrap">
+  <div class="frame">
     <div class="reveal"><span class="eyebrow">Pour qui&nbsp;?</span><h2>Fait pour toi… ou pas.</h2></div>
     <div class="who">
       <div class="who-box yes reveal">
@@ -339,32 +483,36 @@ footer .brand{color:#fff;font-weight:600;font-size:16px;margin-bottom:14px}
   </div>
 </section>
 
-<!-- BLOC 9 -->
+<!-- BLOC 9 : objections -->
 <section id="questions" style="padding-top:0">
-  <div class="wrap">
+  <div class="frame faq-grid">
     <div class="reveal"><span class="eyebrow">Les questions qu'on se pose</span><h2>Tu hésites&nbsp;? C'est normal.</h2></div>
-    <div class="faq">
-      <details class="reveal"><summary>«&nbsp;Au final, le candidat libre c'est pas moins cher.&nbsp;»</summary><p>Ça peut arriver, quand on avance sans plan&nbsp;: trop d'heures de location inutiles, plusieurs passages ratés. Le chapitre budget te fait calculer ton total avant de te lancer, et la méthode d'entraînement sert justement à ne pas gaspiller d'heures.</p></details>
-      <details class="reveal"><summary>«&nbsp;J'ai peur de rater l'examen.&nbsp;»</summary><p>C'est normal. Le guide détaille exactement comment tu es noté et les erreurs qui éliminent, pour que tu saches ce que l'examinateur regarde. Et si ça ne passe pas, tu peux repasser&nbsp;: il n'y a plus de limite de passages tant que ton code est valable.</p></details>
-      <details class="reveal"><summary>«&nbsp;Je peux trouver tout ça gratuitement sur internet.&nbsp;»</summary><p>Les règles officielles sont publiques, oui. Mais elles sont éparpillées sur plusieurs sites, écrites en langage administratif, et les blogs d'auto-écoles en ligne cherchent surtout à te vendre leurs formules. Ici, tout est rassemblé, vérifié, traduit en langage simple et mis dans l'ordre où tu dois le faire.</p></details>
-      <details class="reveal"><summary>«&nbsp;Les infos sont à jour&nbsp;?&nbsp;»</summary><p>Toutes les règles ont été vérifiées en octobre 2026 dans les textes officiels. Les sources sont listées à la fin du guide.</p></details>
-      <details class="reveal"><summary>«&nbsp;Comment je reçois le guide&nbsp;?&nbsp;»</summary><p>Juste après le paiement, tu reçois le PDF à télécharger. Tu peux le lire sur ton téléphone ou l'imprimer.</p></details>
-      <details class="reveal"><summary>«&nbsp;Ça remplace un moniteur&nbsp;?&nbsp;»</summary><p>Non. Le guide t'aide à t'organiser, à éviter les pièges et à te préparer intelligemment. L'apprentissage de la conduite se fait avec ton accompagnateur, sur la route.</p></details>
+    <div class="faq reveal">
+      <details><summary>«&nbsp;Au final, le candidat libre c'est pas moins cher.&nbsp;»</summary><p>Ça peut arriver, quand on avance sans plan&nbsp;: trop d'heures de location inutiles, plusieurs passages ratés. Le chapitre budget te fait calculer ton total avant de te lancer, et la méthode d'entraînement sert justement à ne pas gaspiller d'heures.</p></details>
+      <details><summary>«&nbsp;J'ai peur de rater l'examen.&nbsp;»</summary><p>C'est normal. Le guide détaille exactement comment tu es noté et les erreurs qui éliminent, pour que tu saches ce que l'examinateur regarde. Et si ça ne passe pas, tu peux repasser&nbsp;: il n'y a plus de limite de passages tant que ton code est valable.</p></details>
+      <details><summary>«&nbsp;Je peux trouver tout ça gratuitement sur internet.&nbsp;»</summary><p>Les règles officielles sont publiques, oui. Mais elles sont éparpillées sur plusieurs sites, écrites en langage administratif, et les blogs d'auto-écoles en ligne cherchent surtout à te vendre leurs formules. Ici, tout est rassemblé, vérifié, traduit en langage simple et mis dans l'ordre où tu dois le faire.</p></details>
+      <details><summary>«&nbsp;Les infos sont à jour&nbsp;?&nbsp;»</summary><p>Toutes les règles ont été vérifiées en octobre 2026 dans les textes officiels. Les sources sont listées à la fin du guide.</p></details>
+      <details><summary>«&nbsp;Comment je reçois le guide&nbsp;?&nbsp;»</summary><p>Juste après le paiement, tu reçois le PDF à télécharger. Tu peux le lire sur ton téléphone ou l'imprimer.</p></details>
+      <details><summary>«&nbsp;Ça remplace un moniteur&nbsp;?&nbsp;»</summary><p>Non. Le guide t'aide à t'organiser, à éviter les pièges et à te préparer intelligemment. L'apprentissage de la conduite se fait avec ton accompagnateur, sur la route.</p></details>
     </div>
   </div>
 </section>
 
-<!-- BLOC 10 -->
-<section id="prix" style="padding-top:0">
-  <div class="wrap">
-    <div class="price-band reveal">
+</div><!-- /rails -->
+
+<!-- BLOC 10 : prix -->
+<section class="price-band" id="prix">
+  <div class="frame price-in">
+    <div class="reveal">
       <span class="eyebrow">Ton plan complet</span>
       <h2>Avance avec un plan, pas au hasard.</h2>
       <p class="why">Un examen raté, c'est une nouvelle location de voiture pour le jour J (environ 80 à 150&nbsp;€). Le guide coûte moins que ça.</p>
+    </div>
+    <div class="price-card reveal">
       <div class="price">19&nbsp;€</div>
       <p class="price-incl">Le guide complet + la checklist + le planning.</p>
       <a class="btn buy" href="#prix" id="buy-main">Je veux mon plan <span class="arr" aria-hidden="true">→</span></a>
-      <div class="trust"><span>PDF à télécharger tout de suite après le paiement</span><span>·</span><span>Paiement sécurisé</span></div>
+      <div class="trust"><span>PDF à télécharger tout de suite après le paiement</span><span>Paiement sécurisé</span></div>
     </div>
   </div>
 </section>
@@ -373,7 +521,7 @@ footer .brand{color:#fff;font-weight:600;font-size:16px;margin-bottom:14px}
 
 <!-- BLOC 11 -->
 <footer>
-  <div class="wrap">
+  <div class="frame">
     <div class="brand">Permis en candidat libre</div>
     <p class="fine">Ce guide est un outil d'organisation et d'information. Il ne remplace pas un enseignant de la conduite et ne garantit pas la réussite à l'examen, qui dépend de ta préparation. Les informations ont été vérifiées le 21 octobre 2026&nbsp;; les règles peuvent évoluer.</p>
     <nav aria-label="Informations légales">
@@ -391,29 +539,70 @@ footer .brand{color:#fff;font-weight:600;font-size:16px;margin-bottom:14px}
 // Lien de la page produit Gumroad : à remplir dès que le produit est créé.
 // On ouvre la page Gumroad (pas la fenêtre intégrée) pour que le suivi des affiliés fonctionne.
 const GUMROAD_URL = "";
+if (GUMROAD_URL) document.querySelectorAll(".buy").forEach(a => { a.href = GUMROAD_URL; });
 
-if (GUMROAD_URL) {
-  document.querySelectorAll(".buy").forEach(a => { a.href = GUMROAD_URL; });
+// Contenu des onglets (textes de la page de vente, bloc 6)
+const TABS = [
+  { t: "Avant de dépenser un euro", art: "a", fact: ["Le code", "30 € par passage"], items: [
+    ["Le test en 5 questions", "Pour savoir si le candidat libre est vraiment fait pour toi, avant de dépenser un euro."],
+    ["Le vrai budget", "Ce que l'État te fait payer, ce que le marché te fait payer, et un tableau pour calculer ton total."]]},
+  { t: "Ton dossier et ton code, sans blocage", art: "b", fact: ["Le code", "40 questions, 35 bonnes réponses minimum"], items: [
+    ["Ton numéro NEPH", "La liste exacte des pièces, et les 3 pièges qui bloquent les dossiers (le n°1 concerne tous ceux qui ont déjà été inscrits en auto-école)."],
+    ["Le code du premier coup", "Les chiffres officiels, où le passer, et le bon moment pour le réserver."]]},
+  { t: "Être en règle sur la route", art: "c", fact: ["Ton accompagnateur", "Permis B depuis au moins 5 ans"], items: [
+    ["Ton accompagnateur", "Les 4 conditions officielles, et ce que certains loueurs exigent en plus."],
+    ["La voiture", "Ce que la loi impose vraiment, et les 3 questions à poser au loueur avant de réserver."]]},
+  { t: "T'entraîner sans gaspiller une heure", art: "d", fact: ["Bon à savoir", "Aucun minimum d'heures imposé"], items: [
+    ["La méthode de séance en 3 temps", "Et la règle d'or qui fait économiser des heures de location."]]},
+  { t: "Ta place d'examen et le jour J", art: "e", fact: ["L'épreuve pratique", "32 minutes, 20 points minimum"], items: [
+    ["Réserver ton examen", "Au bon moment, sans te précipiter."],
+    ["Décrocher une place sur RdvPermis", "Les places manquent pour les candidats libres. Les 5 conseils pour mettre toutes les chances de ton côté, et l'erreur qui te bloque 40 jours."],
+    ["Le jour J décortiqué", "Le déroulé des 32 minutes, comment tu es noté, les 2 points bonus que beaucoup oublient, et toutes les erreurs qui éliminent."]]},
+  { t: "Réussi ou raté, tu sais quoi faire", art: "f", fact: ["Le résultat", "En ligne dès le lendemain"], items: [
+    ["Après l'examen", "Réussi ou raté, quoi faire exactement."],
+    ["Deux parcours expliqués du début à la fin", "Un étudiant qui part de zéro, et quelqu'un qui a déjà raté deux fois en auto-école."]]}
+];
+const nbsp = s => s.replace(/ ([?!:;€»])/g, " $1").replace(/« /g, "« ");
+const panelTxt = document.getElementById("panelTxt");
+const panelArt = document.getElementById("panelArt");
+panelArt.innerHTML = TABS.map((d, i) =>
+  `<div class="art art-${d.art}" style="opacity:${i ? 0 : 1}"><div class="gcard"><small>${d.fact[0]}</small><b>${nbsp(d.fact[1])}</b></div><div class="bignum">${i + 1}</div></div>`).join("");
+function showTab(i) {
+  const d = TABS[i];
+  panelTxt.innerHTML = `<h3>${nbsp(d.t)}</h3><ul class="items">${d.items.map(([b, s]) => `<li><div><b>${nbsp(b)}</b><span>${nbsp(s)}</span></div></li>`).join("")}</ul>`;
+  document.querySelectorAll(".tab").forEach((t, k) => t.setAttribute("aria-selected", k === i));
+  panelArt.querySelectorAll(".art").forEach((a, k) => a.style.opacity = k === i ? 1 : 0);
 }
+document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => showTab(+t.dataset.i)));
+showTab(0);
 
-const nav = document.getElementById("nav");
-const sticky = document.getElementById("sticky");
-const hero = document.querySelector(".hero");
-const prix = document.getElementById("prix");
+// En-tête, barre d'achat mobile, parallaxe du hero, route animée au défilement
+const nav = document.getElementById("nav"), sticky = document.getElementById("sticky");
+const hero = document.querySelector(".hero"), heroImg = document.getElementById("heroImg");
+const road = document.getElementById("road"), lane = document.getElementById("lane");
+const traps = [...document.querySelectorAll(".trap")];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let prixVisible = false;
-new IntersectionObserver(([e]) => { prixVisible = e.isIntersecting; onScroll(); }).observe(prix);
+new IntersectionObserver(([e]) => { prixVisible = e.isIntersecting; onScroll(); }).observe(document.getElementById("prix"));
 function onScroll() {
-  const y = window.scrollY;
-  nav.classList.toggle("scrolled", y > 8);
-  sticky.classList.toggle("show", y > hero.offsetHeight * 0.8 && !prixVisible);
+  const y = scrollY, vh = innerHeight;
+  nav.classList.toggle("scrolled", y > 24);
+  sticky.classList.toggle("show", y > hero.offsetHeight * 0.75 && !prixVisible);
+  if (!reduce) {
+    if (y < vh * 1.2) heroImg.style.transform = `scale(${1.06 + y / vh * 0.06}) translateY(${y * 0.12}px)`;
+    const r = road.getBoundingClientRect();
+    const p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+    lane.style.transform = `translateX(-50%) translateY(${(p * 600) % 60}px)`;
+    traps.forEach((t, k) => t.classList.toggle("hit", p > 0.3 + k * 0.12));
+  } else traps.forEach(t => t.classList.add("hit"));
 }
-window.addEventListener("scroll", onScroll, { passive: true });
+addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-}, { rootMargin: "0px 0px -8% 0px" });
-document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+const io = new IntersectionObserver(entries => entries.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+}), { rootMargin: "0px 0px -8% 0px" });
+document.querySelectorAll(".reveal, .chat").forEach(el => io.observe(el));
 </script>
 </body>
 </html>
